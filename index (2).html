@@ -1,0 +1,4563 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>UniMatch 🎓 | ค้นหาคณะที่ใช่</title>
+
+<style>
+
+/* =====================================================
+   BASIC
+===================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:
+        "Segoe UI",
+        "Noto Sans Thai",
+        Tahoma,
+        sans-serif;
+
+    color:#3f3f4d;
+    background:#fffaff;
+
+    line-height:1.6;
+
+    overflow-x:hidden;
+}
+
+button,
+input{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+:root{
+
+    --purple:#8c72e8;
+    --purple-dark:#624ac4;
+    --purple-light:#eee9ff;
+
+    --pink:#ff9fbd;
+    --pink-light:#fff0f5;
+
+    /* MBTI COLORS */
+
+    --nt:#b99aff;      /* 💜 NT */
+    --nf:#91d85d;      /* 💚 NF */
+    --sj:#8ee8dc;      /* 🩵 SJ */
+    --sp:#ffd95a;      /* 💛 SP */
+
+    --white:#ffffff;
+
+    --text:#3f3f4d;
+    --gray:#777989;
+
+    --border:#ece9f5;
+}
+
+
+/* =====================================================
+   FLOATING DECORATIONS
+===================================================== */
+
+.decor{
+    position:fixed;
+    pointer-events:none;
+    z-index:-1;
+    user-select:none;
+}
+
+.decor-1{
+    left:3%;
+    top:18%;
+
+    font-size:34px;
+
+    color:#b99aff;
+
+    animation:
+        floating1 4s ease-in-out infinite;
+}
+
+.decor-2{
+    right:4%;
+    top:30%;
+
+    font-size:32px;
+
+    color:#ff9fbd;
+
+    animation:
+        floating2 5s ease-in-out infinite;
+}
+
+.decor-3{
+    left:5%;
+    bottom:15%;
+
+    font-size:30px;
+
+    animation:
+        floating2 4.5s ease-in-out infinite;
+}
+
+.decor-4{
+    right:5%;
+    bottom:22%;
+
+    font-size:34px;
+
+    color:#8ee8dc;
+
+    animation:
+        floating1 5s ease-in-out infinite;
+}
+
+
+@keyframes floating1{
+
+    0%,100%{
+        transform:
+            translateY(0)
+            rotate(-5deg);
+    }
+
+    50%{
+        transform:
+            translateY(-15px)
+            rotate(8deg);
+    }
+}
+
+
+@keyframes floating2{
+
+    0%,100%{
+        transform:
+            translateY(0)
+            rotate(5deg);
+    }
+
+    50%{
+        transform:
+            translateY(13px)
+            rotate(-8deg);
+    }
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+header{
+
+    position:sticky;
+
+    top:0;
+
+    z-index:1000;
+
+    padding:
+        12px 5%;
+
+    background:
+        rgba(255,255,255,.92);
+
+    backdrop-filter:
+        blur(15px);
+
+    border-bottom:
+        2px solid #f0edf8;
+}
+
+
+.navbar{
+
+    max-width:1200px;
+
+    margin:auto;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:15px;
+}
+
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    color:
+        var(--purple-dark);
+
+    font-size:23px;
+
+    font-weight:1000;
+}
+
+
+.logo-icon{
+
+    display:inline-block;
+
+    animation:
+        logoBounce 2s infinite;
+}
+
+
+@keyframes logoBounce{
+
+    0%,100%{
+        transform:rotate(0);
+    }
+
+    25%{
+        transform:rotate(-8deg);
+    }
+
+    75%{
+        transform:rotate(8deg);
+    }
+}
+
+
+.nav-buttons{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:8px;
+}
+
+
+.nav-buttons button{
+
+    border:none;
+
+    background:
+        var(--purple-light);
+
+    color:
+        var(--purple-dark);
+
+    padding:
+        8px 15px;
+
+    border-radius:30px;
+
+    font-weight:800;
+
+    transition:.25s;
+}
+
+
+.nav-buttons button:hover{
+
+    transform:
+        translateY(-3px);
+
+    background:#dfd7ff;
+}
+
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.hero{
+
+    max-width:1200px;
+
+    margin:
+        30px auto 20px;
+
+    padding:
+        55px 25px;
+
+    border-radius:38px;
+
+    text-align:center;
+
+    position:relative;
+
+    overflow:hidden;
+
+    border:
+        2px solid #eeeafb;
+
+    background:
+
+        radial-gradient(
+            circle at 10% 15%,
+            #ddffff 0,
+            transparent 23%
+        ),
+
+        radial-gradient(
+            circle at 90% 10%,
+            #eadfff 0,
+            transparent 24%
+        ),
+
+        radial-gradient(
+            circle at 50% 100%,
+            #fff0f6 0,
+            transparent 30%
+        ),
+
+        white;
+
+    box-shadow:
+        0 15px 50px
+        rgba(90,70,170,.08);
+}
+
+
+.hero::before{
+
+    content:"✦";
+
+    position:absolute;
+
+    left:35px;
+    top:20px;
+
+    font-size:30px;
+
+    color:#b99aff;
+
+    animation:
+        sparkle 2s infinite;
+}
+
+
+.hero::after{
+
+    content:"♡";
+
+    position:absolute;
+
+    right:35px;
+    bottom:15px;
+
+    font-size:36px;
+
+    color:#ff9fbd;
+
+    animation:
+        sparkle 2.5s infinite;
+}
+
+
+@keyframes sparkle{
+
+    0%,100%{
+        opacity:.4;
+        transform:scale(.9);
+    }
+
+    50%{
+        opacity:1;
+        transform:scale(1.2);
+    }
+}
+
+
+.hero-icon{
+
+    display:inline-block;
+
+    font-size:60px;
+
+    animation:
+        heroBounce 2s infinite;
+}
+
+
+@keyframes heroBounce{
+
+    0%,100%{
+        transform:
+            translateY(0);
+    }
+
+    50%{
+        transform:
+            translateY(-10px);
+    }
+}
+
+
+.hero h1{
+
+    margin-top:8px;
+
+    font-size:43px;
+
+    font-weight:1000;
+
+    color:
+        var(--purple-dark);
+}
+
+
+.hero h1 span{
+
+    color:
+        #ff82aa;
+}
+
+
+.hero p{
+
+    max-width:720px;
+
+    margin:
+        10px auto 0;
+
+    color:
+        var(--gray);
+}
+
+
+/* =====================================================
+   CONTAINER
+===================================================== */
+
+.container{
+
+    max-width:1200px;
+
+    margin:auto;
+
+    padding:20px;
+}
+
+
+.section{
+
+    margin:
+        50px 0;
+}
+
+
+.section-title{
+
+    text-align:center;
+
+    margin-bottom:25px;
+}
+
+
+.section-title h2{
+
+    font-size:30px;
+
+    color:
+        var(--purple-dark);
+}
+
+
+.section-title p{
+
+    color:
+        var(--gray);
+
+    font-size:14px;
+}
+
+
+/* =====================================================
+   MBTI BOX
+===================================================== */
+
+.mbti-box{
+
+    background:white;
+
+    border:
+        2px solid var(--border);
+
+    border-radius:32px;
+
+    padding:30px;
+
+    box-shadow:
+        0 12px 40px
+        rgba(70,60,140,.07);
+}
+
+
+.mbti-intro{
+
+    text-align:center;
+
+    margin-bottom:25px;
+}
+
+
+.mbti-intro .big{
+
+    font-size:46px;
+
+    margin-bottom:3px;
+}
+
+
+.mbti-intro h3{
+
+    color:
+        var(--purple-dark);
+
+    font-size:23px;
+}
+
+
+.mbti-intro p{
+
+    color:
+        var(--gray);
+
+    font-size:14px;
+}
+
+
+/* =====================================================
+   MBTI GROUP LABEL
+===================================================== */
+
+.group-labels{
+
+    display:flex;
+
+    justify-content:center;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    margin-bottom:22px;
+}
+
+
+.group-label{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    padding:
+        7px 13px;
+
+    border-radius:20px;
+
+    font-size:12px;
+
+    font-weight:900;
+}
+
+
+.group-nt{
+    background:var(--nt);
+}
+
+
+.group-nf{
+    background:var(--nf);
+}
+
+
+.group-sj{
+    background:var(--sj);
+}
+
+
+.group-sp{
+    background:var(--sp);
+}
+
+
+/* =====================================================
+   MBTI GRID
+===================================================== */
+
+.mbti-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:13px;
+}
+
+
+.mbti-card{
+
+    border:none;
+
+    min-height:105px;
+
+    border-radius:22px;
+
+    font-size:21px;
+
+    font-weight:1000;
+
+    position:relative;
+
+    overflow:hidden;
+
+    transition:.25s;
+
+    color:#3e3e48;
+
+    box-shadow:
+        0 5px 12px
+        rgba(0,0,0,.05);
+}
+
+
+.mbti-card::before{
+
+    content:"✦";
+
+    position:absolute;
+
+    left:10px;
+    top:5px;
+
+    opacity:.35;
+
+    font-size:17px;
+}
+
+
+.mbti-card::after{
+
+    content:"♡";
+
+    position:absolute;
+
+    right:10px;
+    bottom:4px;
+
+    opacity:.35;
+
+    font-size:23px;
+}
+
+
+.mbti-card:hover{
+
+    transform:
+        translateY(-7px)
+        rotate(-1deg)
+        scale(1.02);
+
+    box-shadow:
+        0 14px 28px
+        rgba(0,0,0,.13);
+}
+
+
+.mbti-card:active{
+
+    transform:
+        scale(.97);
+}
+
+
+.mbti-card small{
+
+    display:block;
+
+    margin-top:3px;
+
+    font-size:11px;
+
+    font-weight:700;
+}
+
+
+/* COLORS */
+
+.mbti-nt{
+
+    background:
+        var(--nt);
+}
+
+
+.mbti-nf{
+
+    background:
+        var(--nf);
+}
+
+
+.mbti-sj{
+
+    background:
+        var(--sj);
+}
+
+
+.mbti-sp{
+
+    background:
+        var(--sp);
+}
+
+
+/* =====================================================
+   MBTI RESULT
+===================================================== */
+
+#mbtiResult{
+
+    display:none;
+
+    margin-top:30px;
+}
+
+
+.mbti-result-card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:32px;
+
+    border-radius:32px;
+
+    box-shadow:
+        0 18px 45px
+        rgba(0,0,0,.12);
+
+    animation:
+        resultAppear .5s ease;
+}
+
+
+@keyframes resultAppear{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            scale(.93)
+            translateY(15px);
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+            scale(1)
+            translateY(0);
+    }
+}
+
+
+.mbti-result-card::before{
+
+    content:
+        "✦  ✧  ♡  ✦  ✧";
+
+    position:absolute;
+
+    right:22px;
+    top:15px;
+
+    font-size:25px;
+
+    opacity:.4;
+}
+
+
+.result-flex{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:25px;
+
+    flex-wrap:wrap;
+}
+
+
+.result-type{
+
+    font-size:72px;
+
+    line-height:1;
+
+    font-weight:1000;
+}
+
+
+.result-name{
+
+    margin-top:5px;
+
+    font-size:30px;
+
+    font-weight:1000;
+}
+
+
+.result-description{
+
+    margin-top:7px;
+
+    max-width:700px;
+}
+
+
+.result-color{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:9px;
+
+    margin-top:17px;
+
+    font-weight:900;
+}
+
+
+.color-dot{
+
+    width:36px;
+
+    height:36px;
+
+    border-radius:50%;
+
+    border:
+        4px solid
+        rgba(255,255,255,.7);
+
+    box-shadow:
+        0 4px 12px
+        rgba(0,0,0,.12);
+}
+
+
+.result-faculty{
+
+    margin-top:20px;
+
+    padding:18px;
+
+    border-radius:22px;
+
+    background:
+        rgba(255,255,255,.55);
+}
+
+
+.result-faculty strong{
+
+    display:block;
+
+    margin-bottom:9px;
+}
+
+
+.tag-list{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:8px;
+}
+
+
+.tag{
+
+    background:
+        rgba(255,255,255,.78);
+
+    padding:
+        7px 13px;
+
+    border-radius:20px;
+
+    font-size:13px;
+
+    font-weight:850;
+}
+
+
+.change-mbti{
+
+    border:none;
+
+    background:white;
+
+    color:
+        var(--purple-dark);
+
+    padding:
+        9px 17px;
+
+    border-radius:20px;
+
+    font-weight:900;
+
+    margin-top:20px;
+
+    transition:.2s;
+}
+
+
+.change-mbti:hover{
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 5px 15px
+        rgba(0,0,0,.1);
+}
+
+
+/* =====================================================
+   UNIVERSITY SEARCH
+===================================================== */
+
+.search-box{
+
+    max-width:700px;
+
+    margin:
+        0 auto 25px;
+
+    display:flex;
+
+    background:white;
+
+    border:
+        2px solid var(--border);
+
+    border-radius:26px;
+
+    padding:6px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(70,60,140,.05);
+}
+
+
+.search-box input{
+
+    flex:1;
+
+    border:none;
+
+    outline:none;
+
+    padding:
+        12px 15px;
+
+    background:transparent;
+
+    font-size:15px;
+}
+
+
+.search-box button{
+
+    border:none;
+
+    background:
+        var(--purple);
+
+    color:white;
+
+    padding:
+        10px 20px;
+
+    border-radius:20px;
+
+    font-weight:900;
+}
+
+
+/* =====================================================
+   UNIVERSITY GRID
+===================================================== */
+
+.university-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:18px;
+}
+
+
+.university-card{
+
+    background:white;
+
+    border:
+        2px solid var(--border);
+
+    border-radius:26px;
+
+    padding:22px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:17px;
+
+    position:relative;
+
+    overflow:hidden;
+
+    transition:.25s;
+}
+
+
+.university-card::before{
+
+    content:"✦";
+
+    position:absolute;
+
+    right:13px;
+    top:8px;
+
+    color:#c8baff;
+
+    animation:
+        sparkle 2s infinite;
+}
+
+
+.university-card:hover{
+
+    transform:
+        translateY(-6px);
+
+    border-color:#d8d0ff;
+
+    box-shadow:
+        0 15px 35px
+        rgba(75,60,150,.12);
+}
+
+
+.university-logo{
+
+    width:78px;
+
+    height:78px;
+
+    flex-shrink:0;
+
+    border-radius:21px;
+
+    background:#f5f2ff;
+
+    border:
+        2px solid #ece9fa;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    overflow:hidden;
+}
+
+
+.university-logo img{
+
+    width:65px;
+
+    height:65px;
+
+    object-fit:contain;
+}
+
+
+.fallback{
+
+    font-size:38px;
+}
+
+
+.university-info{
+
+    flex:1;
+}
+
+
+.university-info h3{
+
+    color:
+        var(--purple-dark);
+
+    font-size:20px;
+
+    margin-bottom:4px;
+}
+
+
+.university-info p{
+
+    color:
+        var(--gray);
+
+    font-size:12px;
+
+    padding-right:15px;
+}
+
+
+.university-card button{
+
+    border:none;
+
+    background:
+        var(--purple-light);
+
+    color:
+        var(--purple-dark);
+
+    padding:
+        9px 13px;
+
+    border-radius:18px;
+
+    font-weight:900;
+
+    white-space:nowrap;
+}
+
+
+/* =====================================================
+   UNIVERSITY DETAIL
+===================================================== */
+
+#universityDetail{
+
+    display:none;
+}
+
+
+.back-button{
+
+    border:none;
+
+    background:
+        var(--purple-light);
+
+    color:
+        var(--purple-dark);
+
+    padding:
+        10px 18px;
+
+    border-radius:20px;
+
+    font-weight:900;
+
+    margin-bottom:20px;
+
+    transition:.2s;
+}
+
+
+.back-button:hover{
+
+    transform:
+        translateX(-4px);
+}
+
+
+.uni-banner{
+
+    background:white;
+
+    border:
+        2px solid var(--border);
+
+    border-radius:32px;
+
+    padding:30px;
+
+    text-align:center;
+
+    position:relative;
+
+    overflow:hidden;
+
+    box-shadow:
+        0 12px 35px
+        rgba(70,60,140,.06);
+}
+
+
+.uni-banner::before{
+
+    content:
+        "🎓  ✦  ♡  ✦  🎓";
+
+    display:block;
+
+    font-size:25px;
+
+    margin-bottom:5px;
+
+    opacity:.55;
+}
+
+
+.uni-banner h2{
+
+    color:
+        var(--purple-dark);
+
+    font-size:32px;
+}
+
+
+.motto{
+
+    max-width:850px;
+
+    margin:
+        13px auto 0;
+
+    padding:
+        16px 20px;
+
+    background:
+        #f8f6ff;
+
+    border-radius:21px;
+
+    color:#646174;
+
+    font-style:italic;
+
+    font-size:14px;
+}
+
+
+/* =====================================================
+   FACULTY SEARCH
+===================================================== */
+
+.faculty-search{
+
+    margin:
+        25px 0;
+
+    display:flex;
+
+    background:white;
+
+    border:
+        2px solid var(--border);
+
+    border-radius:24px;
+
+    padding:5px;
+}
+
+
+.faculty-search input{
+
+    flex:1;
+
+    border:none;
+
+    outline:none;
+
+    padding:12px;
+
+    font-size:14px;
+}
+
+
+.faculty-search button{
+
+    border:none;
+
+    background:
+        var(--purple);
+
+    color:white;
+
+    padding:
+        9px 18px;
+
+    border-radius:19px;
+
+    font-weight:900;
+}
+
+
+/* =====================================================
+   FACULTY GRID
+===================================================== */
+
+.faculty-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:18px;
+}
+
+
+.faculty-card{
+
+    background:white;
+
+    border:
+        2px solid var(--border);
+
+    border-radius:26px;
+
+    padding:22px;
+
+    position:relative;
+
+    transition:.25s;
+}
+
+
+.faculty-card:hover{
+
+    transform:
+        translateY(-5px);
+
+    box-shadow:
+        0 12px 30px
+        rgba(70,60,140,.1);
+}
+
+
+.faculty-top{
+
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:12px;
+}
+
+
+.faculty-icon{
+
+    width:51px;
+
+    height:51px;
+
+    flex-shrink:0;
+
+    border-radius:17px;
+
+    background:
+        #f0edff;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:26px;
+}
+
+
+.faculty-card h3{
+
+    color:
+        var(--purple-dark);
+
+    font-size:19px;
+}
+
+
+.faculty-desc{
+
+    color:
+        var(--gray);
+
+    font-size:13px;
+
+    margin-top:3px;
+}
+
+
+/* =====================================================
+   CHECKBOX
+===================================================== */
+
+.select-faculty{
+
+    margin-top:15px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    background:#f8f6ff;
+
+    padding:9px 12px;
+
+    border-radius:16px;
+
+    color:
+        var(--purple-dark);
+
+    font-size:13px;
+
+    font-weight:900;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+
+.select-faculty:hover{
+
+    background:
+        #eeeaff;
+}
+
+
+.select-faculty input{
+
+    width:18px;
+
+    height:18px;
+
+    accent-color:
+        var(--purple);
+}
+
+
+/* =====================================================
+   FACULTY DETAILS
+===================================================== */
+
+.faculty-details{
+
+    display:none;
+
+    margin-top:15px;
+
+    padding:18px;
+
+    background:
+        #faf9ff;
+
+    border:
+        1px dashed #dcd7f3;
+
+    border-radius:21px;
+
+    animation:
+        slideDown .3s ease;
+}
+
+
+@keyframes slideDown{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            translateY(-7px);
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+
+.faculty-details h4{
+
+    color:
+        var(--purple-dark);
+
+    margin:
+        10px 0 3px;
+}
+
+
+.faculty-details h4:first-child{
+
+    margin-top:0;
+}
+
+
+.faculty-details p,
+.faculty-details li{
+
+    color:#696a79;
+
+    font-size:13px;
+}
+
+
+.faculty-details ul{
+
+    padding-left:20px;
+}
+
+
+/* =====================================================
+   SELECTED FACULTIES
+===================================================== */
+
+.selected-section{
+
+    display:none;
+
+    margin-top:35px;
+
+    padding:22px;
+
+    background:white;
+
+    border:
+        2px solid var(--border);
+
+    border-radius:26px;
+}
+
+
+.selected-section h3{
+
+    color:
+        var(--purple-dark);
+
+    margin-bottom:12px;
+}
+
+
+.selected-list{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:8px;
+}
+
+
+.selected-item{
+
+    background:
+        var(--purple-light);
+
+    color:
+        var(--purple-dark);
+
+    padding:
+        8px 13px;
+
+    border-radius:18px;
+
+    font-size:13px;
+
+    font-weight:900;
+}
+
+
+/* =====================================================
+   EMPTY SEARCH
+===================================================== */
+
+.no-result{
+
+    grid-column:
+        1 / -1;
+
+    text-align:center;
+
+    padding:45px;
+
+    background:white;
+
+    border-radius:25px;
+
+    color:#888;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+footer{
+
+    margin-top:70px;
+
+    padding:
+        35px 20px;
+
+    background:
+        #f0edff;
+
+    text-align:center;
+
+    color:#68647c;
+}
+
+
+.footer-logo{
+
+    color:
+        var(--purple-dark);
+
+    font-size:25px;
+
+    font-weight:1000;
+
+    margin-bottom:5px;
+}
+
+
+footer p{
+
+    font-size:13px;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media(max-width:850px){
+
+    .mbti-grid{
+
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .university-grid{
+
+        grid-template-columns:1fr;
+    }
+
+    .faculty-grid{
+
+        grid-template-columns:1fr;
+    }
+
+    .hero h1{
+
+        font-size:34px;
+    }
+
+}
+
+
+@media(max-width:600px){
+
+    .navbar{
+
+        flex-direction:column;
+    }
+
+    .nav-buttons{
+
+        justify-content:center;
+    }
+
+    .hero{
+
+        margin:
+            15px;
+
+        padding:
+            40px 18px;
+    }
+
+    .container{
+
+        padding:
+            12px;
+    }
+
+    .mbti-box{
+
+        padding:
+            18px;
+    }
+
+    .mbti-grid{
+
+        gap:8px;
+    }
+
+    .mbti-card{
+
+        min-height:80px;
+
+        font-size:17px;
+    }
+
+    .mbti-card small{
+
+        font-size:9px;
+    }
+
+    .result-type{
+
+        font-size:55px;
+    }
+
+    .result-name{
+
+        font-size:25px;
+    }
+
+    .university-card{
+
+        flex-wrap:wrap;
+    }
+
+    .university-card button{
+
+        width:100%;
+    }
+
+    .group-labels{
+
+        gap:6px;
+    }
+
+}
+
+
+/* =====================================================
+   EXTRA ANIMATION
+===================================================== */
+
+.float-heart{
+
+    display:inline-block;
+
+    animation:
+        heartBeat 1.8s infinite;
+}
+
+
+@keyframes heartBeat{
+
+    0%,100%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.2);
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     FLOATING DECOR
+===================================================== -->
+
+<div class="decor decor-1">✦</div>
+<div class="decor decor-2">♡</div>
+<div class="decor decor-3">🌸</div>
+<div class="decor decor-4">✧</div>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header>
+
+<div class="navbar">
+
+    <div class="logo">
+
+        <span class="logo-icon">
+            🎓
+        </span>
+
+        UniMatch
+
+    </div>
+
+
+    <div class="nav-buttons">
+
+        <button onclick="goHome()">
+            🏠 หน้าแรก
+        </button>
+
+        <button onclick="scrollToMBTI()">
+            ✨ MBTI
+        </button>
+
+        <button onclick="scrollToUniversity()">
+            🏫 มหาวิทยาลัย
+        </button>
+
+    </div>
+
+</div>
+
+</header>
+
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="hero">
+
+    <div class="hero-icon">
+        🎓
+    </div>
+
+    <h1>
+        Uni<span>Match</span>
+        <span class="float-heart">♡</span>
+    </h1>
+
+    <p>
+
+        ค้นหาคณะที่น่าสนใจ
+        สำรวจมหาวิทยาลัย
+        และค้นหาสิ่งที่เหมาะกับตัวคุณ
+
+        <br>
+
+        เริ่มจาก MBTI แล้วไปสำรวจคณะที่ใช่กันเลย ✨
+
+    </p>
+
+</section>
+
+
+
+<div class="container">
+
+
+<!-- =====================================================
+     MBTI SECTION
+===================================================== -->
+
+<section
+    class="section"
+    id="mbtiSection">
+
+
+<div class="section-title">
+
+    <h2>
+        ✨ MBTI ของคุณคืออะไร?
+    </h2>
+
+    <p>
+        ถ้ารู้ MBTI ของตัวเองอยู่แล้ว
+        เลือกได้เลย ไม่ต้องทำแบบทดสอบ 💕
+    </p>
+
+</div>
+
+
+
+<div class="mbti-box">
+
+
+<div class="mbti-intro">
+
+    <div class="big">
+        🧠💭
+    </div>
+
+    <h3>
+        เลือกประเภท MBTI
+    </h3>
+
+    <p>
+        เลือกหนึ่งประเภทเพื่อดู
+        สีประจำกลุ่มและคณะที่น่าสนใจ
+    </p>
+
+</div>
+
+
+
+<!-- =====================================================
+     GROUP COLORS
+===================================================== -->
+
+<div class="group-labels">
+
+    <div class="group-label group-nt">
+        💜 NT
+        <span>นักคิด</span>
+    </div>
+
+    <div class="group-label group-nf">
+        💚 NF
+        <span>นักอุดมคติ</span>
+    </div>
+
+    <div class="group-label group-sj">
+        🩵 SJ
+        <span>ผู้พิทักษ์</span>
+    </div>
+
+    <div class="group-label group-sp">
+        💛 SP
+        <span>นักลงมือทำ</span>
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     MBTI BUTTONS
+===================================================== -->
+
+<div class="mbti-grid">
+
+
+    <!-- NT -->
+
+    <button
+        class="mbti-card mbti-nt"
+        onclick="selectMBTI('INTJ')">
+
+        INTJ
+
+        <small>
+            นักวางกลยุทธ์
+        </small>
+
+    </button>
+
+
+    <button
+        class="mbti-card mbti-nt"
+        onclick="selectMBTI('INTP')">
+
+        INTP
+
+        <small>
+            นักคิด
+        </small>
+
+    </button>
+
+
+    <button
+        class="mbti-card mbti-nt"
+        onclick="selectMBTI('ENTJ')">
+
+        ENTJ
+
+        <small>
+            ผู้บัญชาการ
+        </small>
+
+    </button>
+
+
+    <button
+        class="mbti-card mbti-nt"
+        onclick="selectMBTI('ENTP')">
+
+        ENTP
+
+        <small>
+            นักโต้วาที
+        </small>
+
+    </button>
+
+
+
+    <!-- NF -->
+
+    <button
+        class="mbti-card mbti-nf"
+        onclick="selectMBTI('INFJ')">
+
+        INFJ
+
+        <small>
+            ผู้ให้คำปรึกษา
+        </small>
+
+    </button>
+
+
+    <button
+        class="mbti-card mbti-nf"
+        onclick="selectMBTI('INFP')">
+
+        INFP
+
+        <small>
+            นักอุดมคติ
+        </small>
+
+    </button>
+
+
+    <button
+        class="mbti-card mbti-nf"
+        onclick="selectMBTI('ENFJ')">
+
+        ENFJ
+
+        <small>
+            ผู้สร้างแรงบันดาลใจ
+        </small>
+
+    </button>
+
+
+    <button
+        class="mbti-card mbti-nf"
+        onclick="selectMBTI('ENFP')">
+
+        ENFP
+
+        <small>
+            นักรณรงค์
+        </small>
+
+    </button>
+
+
+
+    <!-- SJ -->
+
+    <button
+        class="mbti-card mbti-sj"
+        onclick="selectMBTI('ISTJ')">
+
+        ISTJ
+
+        <small>
+            ผู้ตรวจสอบ
+        </small>
+
+    </button>
+
+
+    <button
+        class="mbti-card mbti-sj"
+        onclick="selectMBTI('ISFJ')">
+
+        ISFJ
+
+        <small>
+            ผู้พิทักษ์
+        </small>
+
+    </button>
+
+
+    <button
+        class="mbti-card mbti-sj"
+        onclick="selectMBTI('ESTJ')">
+
+        ESTJ
+
+        <small>
+            ผู้บริหาร
+        </small>
+
+    </button>
+
+
+    <button
+        class="mbti-card mbti-sj"
+        onclick="selectMBTI('ESFJ')">
+
+        ESFJ
+
+        <small>
+            ผู้ดูแล
+        </small>
+
+    </button>
+
+
+
+    <!-- SP -->
+
+    <button
+        class="mbti-card mbti-sp"
+        onclick="selectMBTI('ISTP')">
+
+        ISTP
+
+        <small>
+            ช่างฝีมือ
+        </small>
+
+    </button>
+
+
+    <button
+        class="mbti-card mbti-sp"
+        onclick="selectMBTI('ISFP')">
+
+        ISFP
+
+        <small>
+            นักผจญภัย
+        </small>
+
+    </button>
+
+
+    <button
+        class="mbti-card mbti-sp"
+        onclick="selectMBTI('ESTP')">
+
+        ESTP
+
+        <small>
+            ผู้ประกอบการ
+        </small>
+
+    </button>
+
+
+    <button
+        class="mbti-card mbti-sp"
+        onclick="selectMBTI('ESFP')">
+
+        ESFP
+
+        <small>
+            ผู้มอบความบันเทิง
+        </small>
+
+    </button>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     MBTI RESULT
+===================================================== -->
+
+<div id="mbtiResult"></div>
+
+
+</div>
+
+</section>
+
+
+
+
+<!-- =====================================================
+     UNIVERSITY SECTION
+===================================================== -->
+
+<section
+    class="section"
+    id="universitySection">
+
+
+<div class="section-title">
+
+    <h2>
+        🏫 เลือกมหาวิทยาลัย
+    </h2>
+
+    <p>
+        เลือกมหาวิทยาลัยที่อยากสำรวจ
+        แล้วดูคณะต่าง ๆ ได้เลย
+    </p>
+
+</div>
+
+
+
+<div class="search-box">
+
+    <input
+        type="text"
+        id="universitySearch"
+        placeholder="🔎 ค้นหามหาวิทยาลัย..."
+        oninput="searchUniversity()">
+
+    <button
+        onclick="searchUniversity()">
+
+        ค้นหา
+
+    </button>
+
+</div>
+
+
+
+<div
+    class="university-grid"
+    id="universityGrid">
+</div>
+
+
+</section>
+
+
+
+
+<!-- =====================================================
+     UNIVERSITY DETAIL
+===================================================== -->
+
+<section
+    class="section"
+    id="universityDetail">
+
+
+<button
+    class="back-button"
+    onclick="backToUniversities()">
+
+    ← กลับไปมหาวิทยาลัย
+
+</button>
+
+
+
+<div
+    class="uni-banner"
+    id="uniBanner">
+</div>
+
+
+
+<div class="faculty-search">
+
+    <input
+        type="text"
+        id="facultySearch"
+        placeholder="🔎 ค้นหาคณะ เช่น แพทย์ วิศวะ บริหาร..."
+        oninput="searchFaculty()">
+
+    <button
+        onclick="searchFaculty()">
+
+        ค้นหา
+
+    </button>
+
+</div>
+
+
+
+<div
+    class="faculty-grid"
+    id="facultyGrid">
+</div>
+
+
+
+<div
+    class="selected-section"
+    id="selectedSection">
+
+    <h3>
+        💜 คณะที่คุณเลือก
+    </h3>
+
+    <div
+        class="selected-list"
+        id="selectedList">
+    </div>
+
+</div>
+
+
+</section>
+
+
+</div>
+
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <div class="footer-logo">
+        🎓 UniMatch ✨
+    </div>
+
+    <p>
+        เว็บไซต์แนะนำมหาวิทยาลัยและคณะ
+        เพื่อช่วยให้การค้นหาคณะสนุกและง่ายขึ้น
+    </p>
+
+    <p style="margin-top:8px;">
+        Made with ♡
+    </p>
+
+</footer>
+
+
+
+<script>
+
+/* =====================================================
+   MBTI DATA
+===================================================== */
+
+const mbtiData = {
+
+
+    /* =================================================
+       NT 💜
+    ================================================= */
+
+    INTJ:{
+
+        group:"NT",
+
+        color:"#b99aff",
+
+        colorName:"สีม่วง",
+
+        title:"นักวางกลยุทธ์",
+
+        emoji:"🦉",
+
+        description:
+            "ชอบวางแผน คิดเป็นระบบ วิเคราะห์ปัญหา และมองภาพระยะยาว",
+
+        faculties:[
+
+            "วิศวกรรมศาสตร์",
+
+            "วิทยาศาสตร์",
+
+            "คอมพิวเตอร์ / IT",
+
+            "เศรษฐศาสตร์"
+
+        ]
+
+    },
+
+
+    INTP:{
+
+        group:"NT",
+
+        color:"#b99aff",
+
+        colorName:"สีม่วง",
+
+        title:"นักคิด",
+
+        emoji:"🔬",
+
+        description:
+            "ชอบค้นหาคำตอบ ตั้งคำถาม และสนุกกับการวิเคราะห์สิ่งต่าง ๆ",
+
+        faculties:[
+
+            "วิทยาศาสตร์",
+
+            "คอมพิวเตอร์ / IT",
+
+            "วิศวกรรมศาสตร์",
+
+            "คณิตศาสตร์"
+
+        ]
+
+    },
+
+
+    ENTJ:{
+
+        group:"NT",
+
+        color:"#b99aff",
+
+        colorName:"สีม่วง",
+
+        title:"ผู้บัญชาการ",
+
+        emoji:"👑",
+
+        description:
+            "มีเป้าหมายชัดเจน ชอบจัดการ วางแผน และนำทีม",
+
+        faculties:[
+
+            "บริหารธุรกิจ",
+
+            "เศรษฐศาสตร์",
+
+            "วิศวกรรมศาสตร์",
+
+            "รัฐศาสตร์"
+
+        ]
+
+    },
+
+
+    ENTP:{
+
+        group:"NT",
+
+        color:"#b99aff",
+
+        colorName:"สีม่วง",
+
+        title:"นักโต้วาที",
+
+        emoji:"💡",
+
+        description:
+            "ชอบไอเดียใหม่ ๆ สนุกกับการคิดต่างและแก้ปัญหา",
+
+        faculties:[
+
+            "นิเทศศาสตร์",
+
+            "บริหารธุรกิจ",
+
+            "กฎหมาย",
+
+            "วิศวกรรมศาสตร์"
+
+        ]
+
+    },
+
+
+    /* =================================================
+       NF 💚
+    ================================================= */
+
+    INFJ:{
+
+        group:"NF",
+
+        color:"#91d85d",
+
+        colorName:"สีเขียว",
+
+        title:"ผู้ให้คำปรึกษา",
+
+        emoji:"🌙",
+
+        description:
+            "เข้าใจผู้อื่น ชอบช่วยเหลือ และสนใจสิ่งที่มีความหมาย",
+
+        faculties:[
+
+            "จิตวิทยา",
+
+            "มนุษยศาสตร์",
+
+            "ศึกษาศาสตร์",
+
+            "สังคมศาสตร์"
+
+        ]
+
+    },
+
+
+    INFP:{
+
+        group:"NF",
+
+        color:"#91d85d",
+
+        colorName:"สีเขียว",
+
+        title:"นักอุดมคติ",
+
+        emoji:"🌷",
+
+        description:
+            "มีความคิดสร้างสรรค์ อ่อนโยน และให้ความสำคัญกับคุณค่าและความหมาย",
+
+        faculties:[
+
+            "อักษรศาสตร์",
+
+            "นิเทศศาสตร์",
+
+            "ศิลปกรรมศาสตร์",
+
+            "จิตวิทยา"
+
+        ]
+
+    },
+
+
+    ENFJ:{
+
+        group:"NF",
+
+        color:"#91d85d",
+
+        colorName:"สีเขียว",
+
+        title:"ผู้สร้างแรงบันดาลใจ",
+
+        emoji:"🌟",
+
+        description:
+            "เข้ากับคนง่าย ชอบช่วยเหลือและสนับสนุนคนรอบตัว",
+
+        faculties:[
+
+            "ศึกษาศาสตร์",
+
+            "นิเทศศาสตร์",
+
+            "จิตวิทยา",
+
+            "บริหารธุรกิจ"
+
+        ]
+
+    },
+
+
+    ENFP:{
+
+        group:"NF",
+
+        color:"#91d85d",
+
+        colorName:"สีเขียว",
+
+        title:"นักรณรงค์",
+
+        emoji:"🌈",
+
+        description:
+            "มีพลัง ชอบไอเดียใหม่ ๆ สนุกกับการพบปะผู้คน และรักอิสระ",
+
+        faculties:[
+
+            "นิเทศศาสตร์",
+
+            "อักษรศาสตร์",
+
+            "บริหารธุรกิจ",
+
+            "จิตวิทยา"
+
+        ]
+
+    },
+
+
+    /* =================================================
+       SJ 🩵
+    ================================================= */
+
+    ISTJ:{
+
+        group:"SJ",
+
+        color:"#8ee8dc",
+
+        colorName:"สีฟ้ามินท์",
+
+        title:"ผู้ตรวจสอบ",
+
+        emoji:"📋",
+
+        description:
+            "มีความรับผิดชอบ เป็นระบบ รอบคอบ และจริงจังกับหน้าที่",
+
+        faculties:[
+
+            "บัญชี",
+
+            "นิติศาสตร์",
+
+            "บริหารธุรกิจ",
+
+            "วิศวกรรมศาสตร์"
+
+        ]
+
+    },
+
+
+    ISFJ:{
+
+        group:"SJ",
+
+        color:"#8ee8dc",
+
+        colorName:"สีฟ้ามินท์",
+
+        title:"ผู้พิทักษ์",
+
+        emoji:"🌸",
+
+        description:
+            "ใส่ใจรายละเอียด ชอบช่วยเหลือ และดูแลคนรอบตัว",
+
+        faculties:[
+
+            "พยาบาลศาสตร์",
+
+            "ศึกษาศาสตร์",
+
+            "เภสัชศาสตร์",
+
+            "จิตวิทยา"
+
+        ]
+
+    },
+
+
+    ESTJ:{
+
+        group:"SJ",
+
+        color:"#8ee8dc",
+
+        colorName:"สีฟ้ามินท์",
+
+        title:"ผู้บริหาร",
+
+        emoji:"📊",
+
+        description:
+            "จัดการเก่ง มีระเบียบ ชอบทำให้งานสำเร็จตามเป้าหมาย",
+
+        faculties:[
+
+            "บริหารธุรกิจ",
+
+            "บัญชี",
+
+            "รัฐศาสตร์",
+
+            "วิศวกรรมศาสตร์"
+
+        ]
+
+    },
+
+
+    ESFJ:{
+
+        group:"SJ",
+
+        color:"#8ee8dc",
+
+        colorName:"สีฟ้ามินท์",
+
+        title:"ผู้ดูแล",
+
+        emoji:"💗",
+
+        description:
+            "เป็นมิตร ให้ความสำคัญกับคนอื่น และชอบทำงานร่วมกับผู้คน",
+
+        faculties:[
+
+            "พยาบาลศาสตร์",
+
+            "ศึกษาศาสตร์",
+
+            "บริหารธุรกิจ",
+
+            "นิเทศศาสตร์"
+
+        ]
+
+    },
+
+
+    /* =================================================
+       SP 💛
+    ================================================= */
+
+    ISTP:{
+
+        group:"SP",
+
+        color:"#ffd95a",
+
+        colorName:"สีเหลือง",
+
+        title:"ช่างฝีมือ",
+
+        emoji:"🔧",
+
+        description:
+            "ชอบลงมือทำ แก้ปัญหาเฉพาะหน้า และเรียนรู้จากประสบการณ์",
+
+        faculties:[
+
+            "วิศวกรรมศาสตร์",
+
+            "สถาปัตยกรรมศาสตร์",
+
+            "เทคโนโลยี",
+
+            "วิทยาศาสตร์"
+
+        ]
+
+    },
+
+
+    ISFP:{
+
+        group:"SP",
+
+        color:"#ffd95a",
+
+        colorName:"สีเหลือง",
+
+        title:"นักผจญภัย",
+
+        emoji:"🎨",
+
+        description:
+            "มีความคิดสร้างสรรค์ รักอิสระ และชอบเรียนรู้จากประสบการณ์จริง",
+
+        faculties:[
+
+            "ศิลปกรรมศาสตร์",
+
+            "นิเทศศาสตร์",
+
+            "สถาปัตยกรรมศาสตร์",
+
+            "การท่องเที่ยว"
+
+        ]
+
+    },
+
+
+    ESTP:{
+
+        group:"SP",
+
+        color:"#ffd95a",
+
+        colorName:"สีเหลือง",
+
+        title:"ผู้ประกอบการ",
+
+        emoji:"⚡",
+
+        description:
+            "คล่องตัว กล้าตัดสินใจ ชอบความท้าทายและการลงมือทำ",
+
+        faculties:[
+
+            "บริหารธุรกิจ",
+
+            "การตลาด",
+
+            "นิเทศศาสตร์",
+
+            "การท่องเที่ยว"
+
+        ]
+
+    },
+
+
+    ESFP:{
+
+        group:"SP",
+
+        color:"#ffd95a",
+
+        colorName:"สีเหลือง",
+
+        title:"ผู้มอบความบันเทิง",
+
+        emoji:"🎉",
+
+        description:
+            "ร่าเริง เข้ากับคนง่าย สนุกกับกิจกรรมและการสร้างสีสัน",
+
+        faculties:[
+
+            "นิเทศศาสตร์",
+
+            "การท่องเที่ยว",
+
+            "ศิลปกรรมศาสตร์",
+
+            "บริหารธุรกิจ"
+
+        ]
+
+    }
+
+};
+
+
+/* =====================================================
+   UNIVERSITIES
+===================================================== */
+
+const universities = [
+
+    {
+        id:"chula",
+
+        name:
+            "จุฬาลงกรณ์มหาวิทยาลัย",
+
+        short:
+            "จุฬาฯ",
+
+        domain:
+            "chula.ac.th",
+
+        motto:
+            "เกียรติภูมิจุฬาฯ คือเกียรติแห่งการรับใช้ประชาชน"
+    },
+
+
+    {
+        id:"thammasat",
+
+        name:
+            "มหาวิทยาลัยธรรมศาสตร์",
+
+        short:
+            "ธรรมศาสตร์",
+
+        domain:
+            "tu.ac.th",
+
+        motto:
+            "ฉันรักธรรมศาสตร์ เพราะธรรมศาสตร์สอนให้ฉันรักประชาชน"
+    },
+
+
+    {
+        id:"mahidol",
+
+        name:
+            "มหาวิทยาลัยมหิดล",
+
+        short:
+            "มหิดล",
+
+        domain:
+            "mahidol.ac.th",
+
+        motto:
+            "อตฺตานํ อุปมํ กเร — พึงปฏิบัติต่อผู้อื่น เหมือนดังปฏิบัติต่อตนเอง"
+    },
+
+
+    {
+        id:"ku",
+
+        name:
+            "มหาวิทยาลัยเกษตรศาสตร์",
+
+        short:
+            "เกษตรศาสตร์",
+
+        domain:
+            "ku.ac.th",
+
+        motto:
+            "ศาสตร์ของแผ่นดิน"
+    },
+
+
+    {
+        id:"kku",
+
+        name:
+            "มหาวิทยาลัยขอนแก่น",
+
+        short:
+            "ขอนแก่น",
+
+        domain:
+            "kku.ac.th",
+
+        motto:
+            "วิทยา คือ ความรู้ดี จริยา คือ ความประพฤติดี ปัญญา คือ ความฉลาด เกิดแต่การเรียนดี และคิดดี"
+    },
+
+
+    {
+        id:"cmu",
+
+        name:
+            "มหาวิทยาลัยเชียงใหม่",
+
+        short:
+            "เชียงใหม่",
+
+        domain:
+            "cmu.ac.th",
+
+        motto:
+            "อตฺตานํ ทมยนฺติ ปณฺฑิตา — บัณฑิตทั้งหลายย่อมฝึกตน"
+    },
+
+
+    {
+        id:"silpakorn",
+
+        name:
+            "มหาวิทยาลัยศิลปากร",
+
+        short:
+            "ศิลปากร",
+
+        domain:
+            "su.ac.th",
+
+        motto:
+            "ศิลปะยืนยาว ชีวิตสั้น"
+    },
+
+
+    {
+        id:"swu",
+
+        name:
+            "มหาวิทยาลัยศรีนครินทรวิโรฒ",
+
+        short:
+            "มศว",
+
+        domain:
+            "swu.ac.th",
+
+        motto:
+            "สิกขา วิรุฬหิ สมฺปตฺตา — การศึกษา คือ ความเจริญงอกงาม (Education is Growth)"
+    },
+
+
+    {
+        id:"buu",
+
+        name:
+            "มหาวิทยาลัยบูรพา",
+
+        short:
+            "บูรพา",
+
+        domain:
+            "buu.ac.th",
+
+        motto:
+            "สุโข ปญฺญาปฏิลาโภ — ความได้ปัญญาทำให้เกิดสุข"
+    },
+
+
+    {
+        id:"psu",
+
+        name:
+            "มหาวิทยาลัยสงขลานครินทร์",
+
+        short:
+            "ม.อ.",
+
+        domain:
+            "psu.ac.th",
+
+        motto:
+            "ปรัชญาการใช้ชีวิตในรั้วมหาวิทยาลัย — เรียนอย่างมีความสุข จบอย่างมีคุณภาพ"
+    }
+
+];
+
+
+/* =====================================================
+   FACULTIES
+===================================================== */
+
+const faculties = [
+
+    {
+        name:"แพทยศาสตร์",
+        icon:"🩺",
+
+        keywords:[
+            "แพทย",
+            "หมอ"
+        ],
+
+        description:
+            "ศึกษาเกี่ยวกับการแพทย์ การวินิจฉัย และการดูแลสุขภาพ",
+
+        learn:
+            "กายวิภาคศาสตร์ สรีรวิทยา พยาธิวิทยา การตรวจวินิจฉัย และการรักษา",
+
+        suitable:[
+            "สนใจวิทยาศาสตร์และสุขภาพ",
+            "ชอบช่วยเหลือผู้อื่น",
+            "มีความรับผิดชอบสูง"
+        ],
+
+        careers:[
+            "แพทย์",
+            "นักวิจัยทางการแพทย์",
+            "งานด้านสาธารณสุข"
+        ]
+    },
+
+
+    {
+        name:"ทันตแพทยศาสตร์",
+        icon:"🦷",
+
+        keywords:[
+            "ทันต",
+            "ฟัน"
+        ],
+
+        description:
+            "ศึกษาเกี่ยวกับสุขภาพช่องปากและการรักษาทางทันตกรรม",
+
+        learn:
+            "กายวิภาคช่องปาก ทันตกรรม การป้องกันโรค และการรักษา",
+
+        suitable:[
+            "สนใจสุขภาพช่องปาก",
+            "ละเอียดและใจเย็น",
+            "ชอบงานที่ต้องใช้ความแม่นยำ"
+        ],
+
+        careers:[
+            "ทันตแพทย์",
+            "นักวิจัย",
+            "งานด้านสุขภาพช่องปาก"
+        ]
+    },
+
+
+    {
+        name:"เภสัชศาสตร์",
+        icon:"💊",
+
+        keywords:[
+            "เภสัช",
+            "ยา"
+        ],
+
+        description:
+            "ศึกษาเกี่ยวกับยา การใช้ยา และการดูแลผู้ป่วยด้วยยา",
+
+        learn:
+            "เภสัชวิทยา เคมีทางยา การผลิตยา และการบริบาลทางเภสัชกรรม",
+
+        suitable:[
+            "ชอบวิทยาศาสตร์",
+            "ละเอียดรอบคอบ",
+            "สนใจเรื่องยาและสุขภาพ"
+        ],
+
+        careers:[
+            "เภสัชกร",
+            "นักวิจัยยา",
+            "อุตสาหกรรมยา"
+        ]
+    },
+
+
+    {
+        name:"พยาบาลศาสตร์",
+        icon:"🩹",
+
+        keywords:[
+            "พยาบาล"
+        ],
+
+        description:
+            "ศึกษาเกี่ยวกับการดูแลผู้ป่วยและการส่งเสริมสุขภาพ",
+
+        learn:
+            "การพยาบาล การดูแลผู้ป่วย การส่งเสริมสุขภาพ และการป้องกันโรค",
+
+        suitable:[
+            "ชอบช่วยเหลือคน",
+            "มีความอดทน",
+            "ทำงานร่วมกับผู้อื่นได้ดี"
+        ],
+
+        careers:[
+            "พยาบาลวิชาชีพ",
+            "งานโรงพยาบาล",
+            "งานสาธารณสุข"
+        ]
+    },
+
+
+    {
+        name:"วิศวกรรมศาสตร์",
+        icon:"⚙️",
+
+        keywords:[
+            "วิศว",
+            "engineer"
+        ],
+
+        description:
+            "ศึกษาเกี่ยวกับการออกแบบ เทคโนโลยี และการแก้ปัญหา",
+
+        learn:
+            "คณิตศาสตร์ ฟิสิกส์ การออกแบบ ระบบ เครื่องจักร และเทคโนโลยี",
+
+        suitable:[
+            "ชอบคณิตศาสตร์และวิทยาศาสตร์",
+            "ชอบแก้ปัญหา",
+            "สนใจเทคโนโลยี"
+        ],
+
+        careers:[
+            "วิศวกร",
+            "นักออกแบบระบบ",
+            "ผู้พัฒนาเทคโนโลยี"
+        ]
+    },
+
+
+    {
+        name:"วิทยาศาสตร์",
+        icon:"🔬",
+
+        keywords:[
+            "วิทย",
+            "science"
+        ],
+
+        description:
+            "ศึกษาและค้นคว้าปรากฏการณ์ต่าง ๆ ทางธรรมชาติ",
+
+        learn:
+            "ชีววิทยา เคมี ฟิสิกส์ คณิตศาสตร์ และการวิจัย",
+
+        suitable:[
+            "ชอบตั้งคำถาม",
+            "สนใจการทดลอง",
+            "ชอบค้นคว้าหาคำตอบ"
+        ],
+
+        careers:[
+            "นักวิทยาศาสตร์",
+            "นักวิจัย",
+            "นักวิเคราะห์"
+        ]
+    },
+
+
+    {
+        name:"คอมพิวเตอร์ / เทคโนโลยีสารสนเทศ",
+        icon:"💻",
+
+        keywords:[
+            "คอม",
+            "it",
+            "ไอที",
+            "เทคโนโลยี"
+        ],
+
+        description:
+            "ศึกษาเกี่ยวกับคอมพิวเตอร์ ซอฟต์แวร์ และเทคโนโลยีดิจิทัล",
+
+        learn:
+            "การเขียนโปรแกรม ฐานข้อมูล ระบบคอมพิวเตอร์ AI และเทคโนโลยีสารสนเทศ",
+
+        suitable:[
+            "ชอบเทคโนโลยี",
+            "ชอบแก้ปัญหา",
+            "สนใจการเขียนโปรแกรม"
+        ],
+
+        careers:[
+            "โปรแกรมเมอร์",
+            "Software Developer",
+            "Data Analyst",
+            "นักพัฒนาเว็บไซต์"
+        ]
+    },
+
+
+    {
+        name:"นิติศาสตร์",
+        icon:"⚖️",
+
+        keywords:[
+            "นิติ",
+            "กฎหมาย"
+        ],
+
+        description:
+            "ศึกษาเกี่ยวกับกฎหมาย สิทธิ และกระบวนการยุติธรรม",
+
+        learn:
+            "กฎหมายแพ่ง กฎหมายอาญา กฎหมายมหาชน และกระบวนการยุติธรรม",
+
+        suitable:[
+            "ชอบอ่านและวิเคราะห์",
+            "สนใจความยุติธรรม",
+            "มีเหตุผล"
+        ],
+
+        careers:[
+            "ทนายความ",
+            "นิติกร",
+            "ผู้พิพากษา",
+            "อัยการ"
+        ]
+    },
+
+
+    {
+        name:"บริหารธุรกิจ",
+        icon:"💼",
+
+        keywords:[
+            "บริหาร",
+            "ธุรกิจ",
+            "จัดการ",
+            "management"
+        ],
+
+        description:
+            "ศึกษาเกี่ยวกับการบริหารองค์กรและการดำเนินธุรกิจ",
+
+        learn:
+            "การจัดการ การตลาด การเงิน ทรัพยากรมนุษย์ และกลยุทธ์ธุรกิจ",
+
+        suitable:[
+            "ชอบวางแผน",
+            "สนใจธุรกิจ",
+            "ชอบทำงานกับผู้คน"
+        ],
+
+        careers:[
+            "นักธุรกิจ",
+            "ผู้จัดการ",
+            "นักการตลาด",
+            "เจ้าของกิจการ"
+        ]
+    },
+
+
+    {
+        name:"บัญชี",
+        icon:"🧮",
+
+        keywords:[
+            "บัญชี"
+        ],
+
+        description:
+            "ศึกษาเกี่ยวกับการบันทึก วิเคราะห์ และจัดการข้อมูลทางการเงิน",
+
+        learn:
+            "การบัญชี การเงิน ภาษี การตรวจสอบบัญชี และการวิเคราะห์ข้อมูล",
+
+        suitable:[
+            "ละเอียดรอบคอบ",
+            "ชอบตัวเลข",
+            "มีระเบียบ"
+        ],
+
+        careers:[
+            "นักบัญชี",
+            "ผู้สอบบัญชี",
+            "นักวิเคราะห์การเงิน"
+        ]
+    },
+
+
+    {
+        name:"เศรษฐศาสตร์",
+        icon:"📈",
+
+        keywords:[
+            "เศรษฐ",
+            "economics"
+        ],
+
+        description:
+            "ศึกษาเกี่ยวกับระบบเศรษฐกิจ การตลาด และการตัดสินใจทางเศรษฐกิจ",
+
+        learn:
+            "เศรษฐศาสตร์จุลภาค มหภาค การเงิน การลงทุน และเศรษฐกิจระหว่างประเทศ",
+
+        suitable:[
+            "ชอบวิเคราะห์ข้อมูล",
+            "สนใจเศรษฐกิจ",
+            "ชอบคณิตศาสตร์"
+        ],
+
+        careers:[
+            "นักเศรษฐศาสตร์",
+            "นักวิเคราะห์",
+            "นักวิเคราะห์การลงทุน"
+        ]
+    },
+
+
+    {
+        name:"ศึกษาศาสตร์ / ครุศาสตร์",
+        icon:"📚",
+
+        keywords:[
+            "ศึกษา",
+            "ครุ",
+            "ครู"
+        ],
+
+        description:
+            "ศึกษาเกี่ยวกับการเรียนรู้ การสอน และการพัฒนาผู้เรียน",
+
+        learn:
+            "จิตวิทยาการศึกษา การออกแบบการเรียนรู้ การสอน และการวัดผล",
+
+        suitable:[
+            "ชอบสอน",
+            "ชอบช่วยคนอื่นเข้าใจ",
+            "อดทนและสื่อสารได้ดี"
+        ],
+
+        careers:[
+            "ครู",
+            "นักวิชาการศึกษา",
+            "นักพัฒนาการเรียนรู้"
+        ]
+    },
+
+
+    {
+        name:"อักษรศาสตร์ / มนุษยศาสตร์",
+        icon:"📖",
+
+        keywords:[
+            "อักษร",
+            "มนุษย",
+            "ภาษา",
+            "ศิลปศาสตร์"
+        ],
+
+        description:
+            "ศึกษาเกี่ยวกับภาษา วัฒนธรรม ความคิด และมนุษย์",
+
+        learn:
+            "ภาษา วรรณกรรม ประวัติศาสตร์ วัฒนธรรม และการสื่อสาร",
+
+        suitable:[
+            "ชอบภาษา",
+            "ชอบอ่าน",
+            "สนใจวัฒนธรรม"
+        ],
+
+        careers:[
+            "นักแปล",
+            "นักเขียน",
+            "งานด้านภาษา",
+            "งานด้านสื่อสาร"
+        ]
+    },
+
+
+    {
+        name:"รัฐศาสตร์",
+        icon:"🏛️",
+
+        keywords:[
+            "รัฐศาสตร์",
+            "การเมือง"
+        ],
+
+        description:
+            "ศึกษาเกี่ยวกับการเมือง การปกครอง และความสัมพันธ์ระหว่างประเทศ",
+
+        learn:
+            "การเมือง การปกครอง ความสัมพันธ์ระหว่างประเทศ และนโยบายสาธารณะ",
+
+        suitable:[
+            "สนใจสังคม",
+            "ชอบวิเคราะห์เหตุการณ์",
+            "สนใจการเมืองและการปกครอง"
+        ],
+
+        careers:[
+            "นักการทูต",
+            "นักวิเคราะห์นโยบาย",
+            "ข้าราชการ",
+            "นักวิจัย"
+        ]
+    },
+
+
+    {
+        name:"นิเทศศาสตร์",
+        icon:"🎬",
+
+        keywords:[
+            "นิเทศ",
+            "สื่อ",
+            "media"
+        ],
+
+        description:
+            "ศึกษาเกี่ยวกับการสื่อสาร สื่อ และการสร้างสรรค์เนื้อหา",
+
+        learn:
+            "การประชาสัมพันธ์ การโฆษณา ภาพยนตร์ สื่อดิจิทัล และการผลิตสื่อ",
+
+        suitable:[
+            "ชอบคิดสร้างสรรค์",
+            "ชอบสื่อ",
+            "ชอบพูดหรือเล่าเรื่อง"
+        ],
+
+        careers:[
+            "Content Creator",
+            "Producer",
+            "นักประชาสัมพันธ์",
+            "นักโฆษณา"
+        ]
+    },
+
+
+    {
+        name:"จิตวิทยา",
+        icon:"🧠",
+
+        keywords:[
+            "จิตวิทยา",
+            "psychology"
+        ],
+
+        description:
+            "ศึกษาเกี่ยวกับความคิด อารมณ์ และพฤติกรรมของมนุษย์",
+
+        learn:
+            "จิตวิทยาพัฒนาการ จิตวิทยาสังคม การให้คำปรึกษา และการวิจัย",
+
+        suitable:[
+            "สนใจคน",
+            "ชอบฟัง",
+            "ชอบวิเคราะห์พฤติกรรม"
+        ],
+
+        careers:[
+            "นักจิตวิทยา",
+            "นักวิจัย",
+            "งานด้านทรัพยากรบุคคล"
+        ]
+    },
+
+
+    {
+        name:"สถาปัตยกรรมศาสตร์",
+        icon:"🏛️",
+
+        keywords:[
+            "สถาปัต",
+            "architecture"
+        ],
+
+        description:
+            "ศึกษาเกี่ยวกับการออกแบบอาคารและพื้นที่",
+
+        learn:
+            "การออกแบบ สถาปัตยกรรม การเขียนแบบ วัสดุ และการวางผัง",
+
+        suitable:[
+            "ชอบออกแบบ",
+            "มีความคิดสร้างสรรค์",
+            "สนใจอาคารและพื้นที่"
+        ],
+
+        careers:[
+            "สถาปนิก",
+            "นักออกแบบ",
+            "นักออกแบบพื้นที่"
+        ]
+    },
+
+
+    {
+        name:"ศิลปกรรมศาสตร์",
+        icon:"🎨",
+
+        keywords:[
+            "ศิลป",
+            "art"
+        ],
+
+        description:
+            "ศึกษาเกี่ยวกับศิลปะและการสร้างสรรค์ผลงาน",
+
+        learn:
+            "ศิลปะ การออกแบบ ทัศนศิลป์ ดนตรี หรือศิลปะการแสดง",
+
+        suitable:[
+            "มีความคิดสร้างสรรค์",
+            "ชอบศิลปะ",
+            "ชอบสร้างผลงาน"
+        ],
+
+        careers:[
+            "ศิลปิน",
+            "นักออกแบบ",
+            "Illustrator",
+            "Creative"
+        ]
+    },
+
+
+    {
+        name:"เกษตรศาสตร์",
+        icon:"🌱",
+
+        keywords:[
+            "เกษตร"
+        ],
+
+        description:
+            "ศึกษาเกี่ยวกับการเกษตร พืช สัตว์ และทรัพยากรธรรมชาติ",
+
+        learn:
+            "พืชศาสตร์ สัตวศาสตร์ ดิน น้ำ เทคโนโลยีการเกษตร และการจัดการ",
+
+        suitable:[
+            "สนใจธรรมชาติ",
+            "ชอบวิทยาศาสตร์",
+            "สนใจอาหารและทรัพยากร"
+        ],
+
+        careers:[
+            "นักวิชาการเกษตร",
+            "นักวิจัย",
+            "ผู้ประกอบการด้านเกษตร"
+        ]
+    },
+
+
+    {
+        name:"สัตวแพทยศาสตร์",
+        icon:"🐶",
+
+        keywords:[
+            "สัตวแพทย",
+            "สัตว์"
+        ],
+
+        description:
+            "ศึกษาเกี่ยวกับสุขภาพและการรักษาสัตว์",
+
+        learn:
+            "กายวิภาคสัตว์ โรคสัตว์ การรักษา และการป้องกันโรค",
+
+        suitable:[
+            "รักสัตว์",
+            "สนใจวิทยาศาสตร์",
+            "มีความรับผิดชอบ"
+        ],
+
+        careers:[
+            "สัตวแพทย์",
+            "นักวิจัย",
+            "งานด้านสุขภาพสัตว์"
+        ]
+    },
+
+
+    {
+        name:"การท่องเที่ยวและการโรงแรม",
+        icon:"✈️",
+
+        keywords:[
+            "ท่องเที่ยว",
+            "โรงแรม"
+        ],
+
+        description:
+            "ศึกษาเกี่ยวกับการท่องเที่ยว การบริการ และธุรกิจโรงแรม",
+
+        learn:
+            "การจัดการโรงแรม การท่องเที่ยว การบริการ และการจัดกิจกรรม",
+
+        suitable:[
+            "ชอบพบปะผู้คน",
+            "ชอบเดินทาง",
+            "มีมนุษยสัมพันธ์ดี"
+        ],
+
+        careers:[
+            "พนักงานโรงแรม",
+            "ผู้จัดการท่องเที่ยว",
+            "มัคคุเทศก์",
+            "Event Organizer"
+        ]
+    }
+
+];
+
+
+/* =====================================================
+   STATE
+===================================================== */
+
+let selectedMBTI = null;
+
+let currentUniversity = null;
+
+let selectedFaculties = [];
+
+
+/* =====================================================
+   SELECT MBTI
+===================================================== */
+
+function selectMBTI(type){
+
+    selectedMBTI = type;
+
+    const data =
+        mbtiData[type];
+
+    const result =
+        document.getElementById(
+            "mbtiResult"
+        );
+
+
+    result.style.display =
+        "block";
+
+
+    result.innerHTML = `
+
+        <div
+            class="mbti-result-card"
+            style="
+                background:
+                linear-gradient(
+                    135deg,
+                    ${data.color},
+                    rgba(255,255,255,.78)
+                );
+            "
+        >
+
+            <div class="result-flex">
+
+                <div>
+
+                    <div class="result-type">
+                        ${type}
+                    </div>
+
+                    <div class="result-name">
+                        ${data.emoji}
+                        ${data.title}
+                    </div>
+
+                    <p class="result-description">
+                        ${data.description}
+                    </p>
+
+                    <div class="result-color">
+
+                        <div
+                            class="color-dot"
+                            style="
+                                background:
+                                ${data.color};
+                            "
+                        ></div>
+
+                        สีประจำกลุ่ม:
+                        ${data.colorName}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="result-faculty">
+
+                <strong>
+                    ✨ คณะที่น่าสนใจสำหรับ ${type}
+                </strong>
+
+                <div class="tag-list">
+
+                    ${data.faculties.map(
+                        faculty => `
+
+                            <span class="tag">
+                                ${faculty}
+                            </span>
+
+                        `
+                    ).join("")}
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="change-mbti"
+                onclick="showMBTISelector()">
+
+                🔄 เปลี่ยน MBTI
+
+            </button>
+
+        </div>
+
+    `;
+
+
+    /*
+       แสดงมหาวิทยาลัย
+       หลังจากเลือก MBTI
+    */
+
+    document.getElementById(
+        "universitySection"
+    ).style.display =
+        "block";
+
+
+    renderUniversities();
+
+
+    setTimeout(() => {
+
+        document.getElementById(
+            "universitySection"
+        ).scrollIntoView({
+
+            behavior:"smooth"
+
+        });
+
+    },450);
+
+}
+
+
+/* =====================================================
+   SHOW MBTI SELECTOR
+===================================================== */
+
+function showMBTISelector(){
+
+    document.getElementById(
+        "mbtiResult"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "mbtiSection"
+    ).scrollIntoView({
+
+        behavior:"smooth"
+
+    });
+
+}
+
+
+/* =====================================================
+   LOGO
+===================================================== */
+
+function logoHTML(domain){
+
+    return `
+
+        <img
+            src="https://www.google.com/s2/favicons?domain=${domain}&sz=128"
+            alt="โลโก้มหาวิทยาลัย"
+
+            onerror="
+                this.style.display='none';
+
+                this.parentElement.innerHTML =
+                '<span class=&quot;fallback&quot;>🎓</span>';
+            "
+        >
+
+    `;
+
+}
+
+
+/* =====================================================
+   RENDER UNIVERSITIES
+===================================================== */
+
+function renderUniversities(
+    list = universities
+){
+
+    const grid =
+        document.getElementById(
+            "universityGrid"
+        );
+
+
+    grid.innerHTML = "";
+
+
+    if(list.length === 0){
+
+        grid.innerHTML = `
+
+            <div class="no-result">
+
+                🔎
+
+                <br>
+
+                ไม่พบมหาวิทยาลัยที่ค้นหา
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    list.forEach(u => {
+
+        const card =
+            document.createElement(
+                "div"
+            );
+
+
+        card.className =
+            "university-card";
+
+
+        card.innerHTML = `
+
+            <div class="university-logo">
+
+                ${logoHTML(u.domain)}
+
+            </div>
+
+
+            <div class="university-info">
+
+                <h3>
+                    ${u.name}
+                </h3>
+
+                <p>
+                    ${u.motto}
+                </p>
+
+            </div>
+
+
+            <button>
+                ดูคณะ →
+            </button>
+
+        `;
+
+
+        card.addEventListener(
+            "click",
+            () => openUniversity(u.id)
+        );
+
+
+        grid.appendChild(card);
+
+    });
+
+}
+
+
+/* =====================================================
+   SEARCH UNIVERSITY
+===================================================== */
+
+function searchUniversity(){
+
+    const input =
+        document.getElementById(
+            "universitySearch"
+        );
+
+
+    const text =
+        input.value
+            .toLowerCase()
+            .trim();
+
+
+    const filtered =
+        universities.filter(u =>
+
+            u.name
+                .toLowerCase()
+                .includes(text)
+
+            ||
+
+            u.short
+                .toLowerCase()
+                .includes(text)
+
+        );
+
+
+    renderUniversities(
+        filtered
+    );
+
+}
+
+
+/* =====================================================
+   OPEN UNIVERSITY
+===================================================== */
+
+function openUniversity(id){
+
+    currentUniversity =
+        universities.find(
+            u => u.id === id
+        );
+
+
+    if(!currentUniversity){
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "universitySection"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "universityDetail"
+    ).style.display =
+        "block";
+
+
+    selectedFaculties = [];
+
+
+    document.getElementById(
+        "facultySearch"
+    ).value = "";
+
+
+    renderUniversityBanner();
+
+    renderFaculties();
+
+
+    document.getElementById(
+        "universityDetail"
+    ).scrollIntoView({
+
+        behavior:"smooth"
+
+    });
+
+}
+
+
+/* =====================================================
+   UNIVERSITY BANNER
+===================================================== */
+
+function renderUniversityBanner(){
+
+    const u =
+        currentUniversity;
+
+
+    document.getElementById(
+        "uniBanner"
+    ).innerHTML = `
+
+        <div
+            class="university-logo"
+            style="
+                width:90px;
+                height:90px;
+                margin:
+                    0 auto 15px;
+            "
+        >
+
+            ${logoHTML(u.domain)}
+
+        </div>
+
+
+        <h2>
+            ${u.name}
+        </h2>
+
+
+        <div class="motto">
+
+            💬
+
+            <strong>
+                ปรัชญา / คติพจน์
+            </strong>
+
+            <br><br>
+
+            ${u.motto}
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   RENDER FACULTIES
+===================================================== */
+
+function renderFaculties(
+    list = faculties
+){
+
+    const grid =
+        document.getElementById(
+            "facultyGrid"
+        );
+
+
+    grid.innerHTML = "";
+
+
+    if(list.length === 0){
+
+        grid.innerHTML = `
+
+            <div class="no-result">
+
+                🔎
+
+                <br>
+
+                ไม่พบคณะที่ค้นหา
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    list.forEach(
+        (faculty,index) => {
+
+
+        const card =
+            document.createElement(
+                "div"
+            );
+
+
+        card.className =
+            "faculty-card";
+
+
+        card.dataset.name =
+            faculty.name
+                .toLowerCase();
+
+
+        card.innerHTML = `
+
+            <div class="faculty-top">
+
+                <div class="faculty-icon">
+                    ${faculty.icon}
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        ${faculty.name}
+                    </h3>
+
+                    <p class="faculty-desc">
+                        ${faculty.description}
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <label class="select-faculty">
+
+                <input
+                    type="checkbox"
+                    class="faculty-checkbox"
+                >
+
+                ⭐ สนใจคณะนี้
+
+            </label>
+
+
+            <div class="faculty-details">
+
+                <h4>
+                    📚 เรียนอะไร?
+                </h4>
+
+                <p>
+                    ${faculty.learn}
+                </p>
+
+
+                <h4>
+                    💕 เหมาะกับใคร?
+                </h4>
+
+                <ul>
+
+                    ${faculty.suitable.map(
+                        item => `
+
+                            <li>
+                                ${item}
+                            </li>
+
+                        `
+                    ).join("")}
+
+                </ul>
+
+
+                <h4>
+                    💼 อาชีพที่สามารถทำได้
+                </h4>
+
+                <ul>
+
+                    ${faculty.careers.map(
+                        career => `
+
+                            <li>
+                                ${career}
+                            </li>
+
+                        `
+                    ).join("")}
+
+                </ul>
+
+            </div>
+
+        `;
+
+
+        const checkbox =
+            card.querySelector(
+                ".faculty-checkbox"
+            );
+
+
+        const details =
+            card.querySelector(
+                ".faculty-details"
+            );
+
+
+        checkbox.addEventListener(
+            "change",
+            function(){
+
+                if(this.checked){
+
+                    details.style.display =
+                        "block";
+
+
+                    if(
+                        !selectedFaculties
+                            .includes(
+                                faculty.name
+                            )
+                    ){
+
+                        selectedFaculties.push(
+                            faculty.name
+                        );
+
+                    }
+
+                }else{
+
+                    details.style.display =
+                        "none";
+
+
+                    selectedFaculties =
+                        selectedFaculties.filter(
+                            name =>
+                                name !==
+                                faculty.name
+                        );
+
+                }
+
+
+                updateSelectedList();
+
+            }
+        );
+
+
+        grid.appendChild(card);
+
+    });
+
+}
+
+
+/* =====================================================
+   SEARCH FACULTY
+===================================================== */
+
+function searchFaculty(){
+
+    const text =
+        document.getElementById(
+            "facultySearch"
+        )
+        .value
+        .toLowerCase()
+        .trim();
+
+
+    const filtered =
+        faculties.filter(
+            faculty => {
+
+                const nameMatch =
+                    faculty.name
+                        .toLowerCase()
+                        .includes(text);
+
+
+                const keywordMatch =
+                    faculty.keywords.some(
+                        keyword =>
+
+                            keyword
+                                .toLowerCase()
+                                .includes(text)
+
+                    );
+
+
+                return (
+                    nameMatch ||
+                    keywordMatch
+                );
+
+            }
+        );
+
+
+    renderFaculties(
+        filtered
+    );
+
+}
+
+
+/* =====================================================
+   SELECTED LIST
+===================================================== */
+
+function updateSelectedList(){
+
+    const section =
+        document.getElementById(
+            "selectedSection"
+        );
+
+
+    const list =
+        document.getElementById(
+            "selectedList"
+        );
+
+
+    if(
+        selectedFaculties.length === 0
+    ){
+
+        section.style.display =
+            "none";
+
+        return;
+    }
+
+
+    section.style.display =
+        "block";
+
+
+    list.innerHTML =
+        selectedFaculties
+            .map(
+                faculty => `
+
+                    <span
+                        class="selected-item">
+
+                        💜 ${faculty}
+
+                    </span>
+
+                `
+            )
+            .join("");
+
+}
+
+
+/* =====================================================
+   BACK TO UNIVERSITY
+===================================================== */
+
+function backToUniversities(){
+
+    document.getElementById(
+        "universityDetail"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "universitySection"
+    ).style.display =
+        "block";
+
+
+    document.getElementById(
+        "universitySection"
+    ).scrollIntoView({
+
+        behavior:"smooth"
+
+    });
+
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+function scrollToMBTI(){
+
+    document.getElementById(
+        "mbtiSection"
+    ).scrollIntoView({
+
+        behavior:"smooth"
+
+    });
+
+}
+
+
+function scrollToUniversity(){
+
+    document.getElementById(
+        "universitySection"
+    ).scrollIntoView({
+
+        behavior:"smooth"
+
+    });
+
+}
+
+
+function goHome(){
+
+    window.scrollTo({
+
+        top:0,
+
+        behavior:"smooth"
+
+    });
+
+}
+
+
+/* =====================================================
+   INITIAL LOAD
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        /*
+            ตอนเปิดเว็บใหม่
+            จะเห็น MBTI ก่อน
+
+            มหาวิทยาลัยจะเปิด
+            หลังจากเลือก MBTI
+        */
+
+        document.getElementById(
+            "universitySection"
+        ).style.display =
+            "none";
+
+
+        document.getElementById(
+            "universityDetail"
+        ).style.display =
+            "none";
+
+    }
+);
+
+</script>
+
+</body>
+</html>
